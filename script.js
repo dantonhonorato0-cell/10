@@ -2,6 +2,7 @@ const tinomauro = document.getElementById('tinomauro');
 const obstacle = document.getElementById('obstacle');
 const scoreDisplay = document.getElementById('score');
 const startBtn = document.getElementById('startBtn');
+const gameArea = document.querySelector('.game');
 
 let isJumping = false;
 let jumpHeight = 0;
@@ -81,12 +82,11 @@ document.addEventListener('keydown', e => {
   }
 });
 
+gameArea.addEventListener('touchstart', e => {
+  e.preventDefault();
+  jump();
+});
+
 startBtn.addEventListener('click', () => {
   startGame();
-});
-const gameArea = document.querySelector('.game');
-
-gameArea.addEventListener('touchstart', e => {
-  e.preventDefault(); // evita scroll e outros efeitos
-  jump();
 });
