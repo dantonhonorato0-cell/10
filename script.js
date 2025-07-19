@@ -1,14 +1,18 @@
 const tinomauro = document.getElementById('tinomauro');
 const obstacle = document.getElementById('obstacle');
 const scoreDisplay = document.getElementById('score');
+const startBtn = document.getElementById('startBtn');
 
 let isJumping = false;
 let jumpHeight = 0;
 let score = 0;
 let gameOver = false;
+let gameStarted = false;
+let scoreInterval = null;
+let collisionInterval = null;
 
 function jump() {
-  if (isJumping) return;
+  if (isJumping || !gameStarted) return;
   isJumping = true;
   let upInterval = setInterval(() => {
     if (jumpHeight >= 100) {
@@ -37,23 +41,38 @@ function checkCollision() {
     runnerRect.bottom > obstacleRect.top
   ) {
     gameOver = true;
+    stopGame();
     alert('Game Over! Sua pontuação: ' + score);
-    resetGame();
   }
 }
 
-function resetGame() {
+function startGame() {
+  if (gameStarted) return;
+
+  gameStarted = true;
+  gameOver = false;
   score = 0;
   scoreDisplay.textContent = score;
-  gameOver = false;
-  obstacle.style.animation = 'moveObstacle 2s linear infinite';
-}
+  obstacle.classList.remove('paused');
+  startBtn.style.display = 'none';
 
-function updateScore() {
-  if (!gameOver) {
+  scoreInterval = setInterval(() => {
     score++;
     scoreDisplay.textContent = score;
-  }
+  }, 200);
+
+  collisionInterval = setInterval(() => {
+    checkCollision();
+  }, 50);
+}
+
+function stopGame() {
+  gameStarted = false;
+  obstacle.classList.add('paused');
+  startBtn.style.display = 'block';
+
+  clearInterval(scoreInterval);
+  clearInterval(collisionInterval);
 }
 
 document.addEventListener('keydown', e => {
@@ -62,10 +81,6 @@ document.addEventListener('keydown', e => {
   }
 });
 
-obstacle.addEventListener('animationiteration', () => {
-  if (!gameOver) updateScore();
+startBtn.addEventListener('click', () => {
+  startGame();
 });
-
-setInterval(() => {
-  if (!gameOver) checkCollision();
-}, 50);

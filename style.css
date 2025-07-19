@@ -32,7 +32,6 @@ body {
     10px 15px 0 0 #800080; /* cabelo emo roxo */
 }
 
-/* Cabelo emo estilizado */
 .runner::before {
   content: '';
   position: absolute;
@@ -56,6 +55,10 @@ body {
   animation: moveObstacle 2s linear infinite;
 }
 
+.obstacle.paused {
+  animation-play-state: paused;
+}
+
 @keyframes moveObstacle {
   from {
     right: -20px;
@@ -71,4 +74,25 @@ body {
   right: 10px;
   font-size: 24px;
   font-weight: bold;
-  color: #eee; 	
+  color: #eee;
+}
+
+#startBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  padding: 10px 30px;
+  cursor: pointer;
+  background-color: #800080;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+#startBtn:hover {
+  background-color: #a040a0;
+}
