@@ -84,3 +84,9 @@ document.addEventListener('keydown', e => {
 startBtn.addEventListener('click', () => {
   startGame();
 });
+const gameArea = document.querySelector('.game');
+
+gameArea.addEventListener('touchstart', e => {
+  e.preventDefault(); // evita scroll e outros efeitos
+  jump();
+});
