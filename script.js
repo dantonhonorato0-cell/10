@@ -33,6 +33,8 @@ function jump() {
 }
 
 function checkCollision() {
+  if (!gameStarted) return;
+
   const runnerRect = tinomauro.getBoundingClientRect();
   const obstacleRect = obstacle.getBoundingClientRect();
 
@@ -54,6 +56,7 @@ function startGame() {
   gameOver = false;
   score = 0;
   scoreDisplay.textContent = score;
+
   obstacle.classList.remove('paused');
   startBtn.style.display = 'none';
 
